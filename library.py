@@ -37,7 +37,7 @@ class Library():
         self.book_catalog.remove(book)
 
     def display_catalog(self):
-        print('---- BOOKS IN THE LIBRARY ----')
+        print('----- BOOKS IN THE LIBRARY -----')
         for book in self.book_catalog:
             print(f'BookID: {book.get_id()}')
             print(f'\tTitle: {book.get_title()}')
