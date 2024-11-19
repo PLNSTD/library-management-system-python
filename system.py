@@ -29,11 +29,17 @@ def main():
 
             # Wait to get to main menu
             utilities.wait()
-        if user_input == 0: # EXIT SYSTEM
+        elif user_input == 5:
+            # Clear Terminal
+            utilities.prompt_clear()
+
+            # Use the my_lib class to Generate a new book
+            my_lib.display_catalog()
+
+            # Wait to get to main menu
+            utilities.wait()
+        elif user_input == 0: # EXIT SYSTEM
             utilities.prompt_clear()
             break
-
         
-
-
 main()

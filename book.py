@@ -3,7 +3,7 @@ class Book():
     # Attribute to get unique id for each book
     _id_counter = 0
 
-    def __init__(self, title, author) -> None:
+    def __init__(self, title, author, available=True) -> None:
         # Set unique ID for the instance
         Book._id_counter += 1 
 
@@ -27,3 +27,9 @@ class Book():
     def set_availability(self, status):
         self.available = status
     
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'author': self.author,
+            'available': self.available
+        }
