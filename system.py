@@ -18,7 +18,7 @@ def main():
         print('\t0 - Exit System')
 
         # Get User Input
-        user_input = utilities.get_user_input_choice()
+        user_input = utilities.get_user_input_choice('\n\tYour choice: ')
 
         if user_input == 1:
             # Clear Terminal
@@ -26,6 +26,14 @@ def main():
 
             # Use the my_lib class to Generate a new book
             my_lib.add_book()
+
+            # Wait to get to main menu
+            utilities.wait()
+        elif user_input == 2:
+            # Clear Terminal
+            utilities.prompt_clear()
+
+            my_lib.remove_book()
 
             # Wait to get to main menu
             utilities.wait()

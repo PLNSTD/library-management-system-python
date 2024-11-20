@@ -11,8 +11,8 @@ def wait():
         time.sleep(1)
         counter -= 1
 
-def get_user_input_choice():
-    user_input = input('\nYour choice: ')
+def get_user_input_choice(prompt):
+    user_input = input(prompt)
 
     try:
         user_input = int(user_input)
