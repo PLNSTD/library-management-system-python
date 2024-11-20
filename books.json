@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "id": 2,
+        "title": "HP 2",
+        "author": "JKR",
+        "available": true,
+        "borrower": null
+    },
+    {
+        "id": 3,
+        "title": "HP 1",
+        "author": "JKR",
+        "available": true,
+        "borrower": null
+    }
+]

@@ -1,18 +1,20 @@
 import utilities, json
 from book import Book
+from member import Member
 
 class Library():
 
-    def __init__(self, json_file='books.json'):
-        self.json_file = json_file
+    def __init__(self, book_json_file='books.json', members_json_file='members.json'):
+        self.book_json_file = book_json_file
+        self.members_json_file = members_json_file
         self.book_catalog = self.load_books()
-        self.members = []
+        self.members = self.load_members()
     
     def load_books(self):
         try:
-            with open(self.json_file, 'r') as file:
+            with open(self.book_json_file, 'r') as file:
                 data = json.load(file)
-                books = [Book(book['title'], book['author'], book['available']) for book in data]
+                books = [Book(title=book['title'], author=book['author'], id_book=book['id'], available=book['available'], borrower=book['borrower']) for book in data]
                 return books
         except (FileNotFoundError):
             return []
@@ -21,10 +23,27 @@ class Library():
         # Convert all Book instances to dictionaries and save
         books_data = [book.to_dict() for book in self.book_catalog]
 
-        with open(self.json_file, 'w') as file:
+        with open(self.book_json_file, 'w') as file:
             json.dump(books_data, file, indent=4)
 
+    def load_members(self):
+        try:
+            with open(self.members_json_file, 'r') as file:
+                data = json.load(file)
+                members = [Member(first_name=member['first_name'], last_name=member['last_name'], id_member=member['id'], borrowed_books=member['borrowed_books']) for member in data]
+                return members
+        except (FileNotFoundError):
+            return []
+
+    def save_members_to_json(self):
+        # Convert all Member instances to dictionaries and save
+        members_data = [member.to_dict() for member in self.members]
+
+        with open(self.members_json_file, 'w') as file:
+            json.dump(members_data, file, indent=4)
+
     def add_book(self):
+        print('----- NEW BOOK -----')
         book_title = utilities.get_non_empty_input('Book Title: ')
         book_author = utilities.get_non_empty_input('Author: ')
 
@@ -67,17 +86,38 @@ class Library():
         print(f'BookID: {book.get_id()}')
         print(f'\tTitle: {book.get_title()}')
         print(f'\tAuthor: {book.get_author()}')
+        if book.get_borrower() is not None:
+            print(f'\tBorrowed by: {book.get_borrower()}')
 
     def display_catalog(self):
         print('----- BOOKS IN THE LIBRARY -----')
         for book in self.book_catalog:
             self.display_book(book)
-        
-        input('\nPress a ENTER to continue...')
+    
+    def display_member(self, member):
+        print(f'MemberID: {member.get_id()}')
+        print(f'\tFirst Name: {member.get_first_name()}')
+        print(f'\tLast Name: {member.get_last_name()}')
+        borrowed_books = member.get_borrowed_books()
+        if borrowed_books == []:
+            print(f'\tTotal Borrowed books: {len(borrowed_books)}')
+            for book in borrowed_books:
+                self.display_book(book)
+
+    def display_member_list(self):
+        for member in self.members:
+            self.display_member(member)
     
     def get_members(self):
         return self.members
 
-    def add_member(self, member):
-        self.members.append(member)
+    def add_member(self):
+        print('----- NEW MEMBER -----')
+        member_first_name = utilities.get_non_empty_input('First Name: ')
+        member_last_name = utilities.get_non_empty_input('Last Name: ')
+
+        # Generate New member and save to JSON file
+        new_member = Member(member_first_name, member_last_name)
+        self.members.append(new_member)
+        self.save_members_to_json()
     

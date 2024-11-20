@@ -4,6 +4,7 @@ def prompt_clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def wait():
+    input('\nPress a ENTER to continue...')
     counter = 3
     print(f'Please wait...')
     while counter > 0:
