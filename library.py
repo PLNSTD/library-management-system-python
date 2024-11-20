@@ -76,12 +76,16 @@ class Library():
                     print('Could not remove the book..')
                 break
             else:
-                print('Book not in catalog!')
+                print('Book ID not in catalog!')
 
     def get_book_by_id(self, id):
         book = [book for book in self.book_catalog if book.get_id() == id]
         return book[0] if len(book) != 0 else None
 
+    def get_member_by_id(self, id):
+        member = [member for member in self.members if member.get_id() == id]
+        return member[0] if len(member) != 0 else None
+    
     def display_book(self, book):
         print(f'BookID: {book.get_id()}')
         print(f'\tTitle: {book.get_title()}')
@@ -99,8 +103,8 @@ class Library():
         print(f'\tFirst Name: {member.get_first_name()}')
         print(f'\tLast Name: {member.get_last_name()}')
         borrowed_books = member.get_borrowed_books()
-        if borrowed_books == []:
-            print(f'\tTotal Borrowed books: {len(borrowed_books)}')
+        print(f'\tTotal Borrowed books: {len(borrowed_books)}')
+        if len(borrowed_books) > 0:
             for book in borrowed_books:
                 self.display_book(book)
 
@@ -120,4 +124,30 @@ class Library():
         new_member = Member(member_first_name, member_last_name)
         self.members.append(new_member)
         self.save_members_to_json()
+    
+    def remove_member(self):
+        # self.book_catalog.remove(book)
+        print('(For more informations display members)')
+        print('\t0 - Go back')
+        member_id = None
+        while True:
+            member_id = utilities.get_user_input_choice('\n\tInsert ID of the member to remove: ')
+            if member_id == -1:
+                print('Please insert a valid input.')
+                continue
+            if member_id == 0:
+                return
+            member_to_remove = self.get_member_by_id(member_id)
+            if member_to_remove != None:
+                try:
+                    print('Removing...\n')
+                    self.display_member(member_to_remove)
+                    self.members.remove(member_to_remove)
+                    self.save_members_to_json()
+                    print('\nMember REMOVED')
+                except:
+                    print('Could not remove the member..')
+                break
+            else:
+                print('Member ID not present!')
     

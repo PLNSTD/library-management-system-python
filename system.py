@@ -31,11 +31,11 @@ def main():
         elif user_input == 2: # Remove a book
             # Use the library class to remove existing book
             my_lib.remove_book()
-        elif user_input == 3: # TODO: Add a member
+        elif user_input == 3: # Add a member
             # Use the library class to add a new member
             my_lib.add_member()
-        elif user_input == 4: # TODO: Remove a member
-            pass
+        elif user_input == 4: # Remove a member
+            my_lib.remove_member()
         elif user_input == 5: # TODO: Borrow a book
             pass
         elif user_input == 6: # TODO: Return a book
@@ -43,7 +43,7 @@ def main():
         elif user_input == 7: # Display books
             # Use the library class to display books
             my_lib.display_catalog()
-        elif user_input == 8: # TODO: Display members
+        elif user_input == 8: # Display members
             my_lib.display_member_list()
         elif user_input == 0: # EXIT SYSTEM
             break
