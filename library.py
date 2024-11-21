@@ -53,17 +53,22 @@ class Library():
         self.save_books_to_json()
 
     def remove_book(self):
-        # self.book_catalog.remove(book)
         print('(For more informations display book catalog)')
         print('\t0 - Go back')
         book_id = None
+
+        # Get book choice
         while True:
+
             book_id = utilities.get_user_input_choice('\n\tInsert ID of the book to remove: ')
+            
             if book_id == -1:
                 print('Please insert a valid input.')
                 continue
+
             if book_id == 0:
                 return
+            
             book_to_remove = self.get_book_by_id(book_id)
             if book_to_remove != None:
                 try:
@@ -91,26 +96,29 @@ class Library():
         print(f'\tTitle: {book.get_title()}')
         print(f'\tAuthor: {book.get_author()}')
         if book.get_borrower() is not None:
-            print(f'\tBorrowed by: {book.get_borrower()}')
+            print(f'\tBorrower ID: {book.get_borrower()}')
 
     def display_catalog(self):
         print('----- BOOKS IN THE LIBRARY -----')
+        print(f'Total books: {len(self.book_catalog)}')
         for book in self.book_catalog:
             self.display_book(book)
     
-    def display_member(self, member):
+    def display_member(self, member, show_books=True):
         print(f'MemberID: {member.get_id()}')
         print(f'\tFirst Name: {member.get_first_name()}')
         print(f'\tLast Name: {member.get_last_name()}')
         borrowed_books = member.get_borrowed_books()
         print(f'\tTotal Borrowed books: {len(borrowed_books)}')
-        if len(borrowed_books) > 0:
-            for book in borrowed_books:
-                self.display_book(book)
+        if len(borrowed_books) > 0 and show_books:
+            for book_id in borrowed_books:
+                self.display_book(self.get_book_by_id(book_id))
 
     def display_member_list(self):
+        print('----- MEMBERS OF THE LIBRARY -----')
+        print(f'Total members: {len(self.members)}')
         for member in self.members:
-            self.display_member(member)
+            self.display_member(member, show_books=False)
     
     def get_members(self):
         return self.members
@@ -151,3 +159,127 @@ class Library():
             else:
                 print('Member ID not present!')
     
+    def borrow_book(self):
+        book_to_borrow = None
+        borrower = None
+
+        print('----- BORROWING MENU -----')
+        print('\t0 - Go back')
+
+        # Get Info book and availability
+        while True: # Check input and get book (if exists)
+            book_id = utilities.get_user_input_choice('\nInsert Book ID: ')
+            
+            if book_id == -1:
+                print('Please insert a valid input.')
+                continue
+
+            if book_id == 0:
+                return
+            
+            book_to_borrow = self.get_book_by_id(book_id)
+            
+            if book_to_borrow == None:
+                print('\n\tBook not in catalog!')
+                continue
+
+            if not book_to_borrow.is_available():
+                print('\n\tBook unavailable at the moment.. already borrowed')
+                continue
+            break
+
+        self.display_book(book_to_borrow)
+
+        while True: # Check input and get member (if exists)
+            member_id = utilities.get_user_input_choice('\nInsert Member ID: ')
+
+            if member_id == -1:
+                print('Please insert a valid input.')
+                continue
+
+            if member_id == 0:
+                return
+            
+            borrower = self.get_member_by_id(member_id)
+
+            if borrower == None:
+                print('\n\tMember ID not in the system')
+                continue
+            break
+
+        # Update book got borrowed
+        book_to_borrow.set_availability(False)
+        book_to_borrow.set_borrower(borrower.get_id())
+
+        # Update member borrowed books
+        borrower.add_borrowed_book(book_to_borrow.get_id())
+        # utilities.wait(1,press_key=False) # Wait time to update lists
+
+        self.save_books_to_json()
+        self.save_members_to_json()
+
+        self.display_member(borrower, show_books=False)
+
+    def return_book(self):
+        book_to_return = None
+        borrower = None
+
+        print('----- BORROWING MENU-----')
+        print('\t0 - Go back')
+
+        while True: # Check input and get member (if exists)
+            member_id = utilities.get_user_input_choice('\nInsert Member ID: ')
+
+            if member_id == -1:
+                print('Please insert a valid input.')
+                continue
+
+            if member_id == 0:
+                return
+            
+            borrower = self.get_member_by_id(member_id)
+
+            if borrower == None:
+                print('\n\tMember ID not in the system')
+                continue
+
+            if len(borrower.get_borrowed_books()) == 0:
+                print('\n\tThis member has no book to return!')
+                continue
+            break
+
+        self.display_member(borrower, show_books=False)
+
+        # Get Info book and availability
+        while True: # Check input and get book (if exists)
+            book_id = utilities.get_user_input_choice('\nInsert Book ID: ')
+            
+            if book_id == -1:
+                print('Please insert a valid input.')
+                continue
+
+            if book_id == 0:
+                return
+            
+            book_to_return = self.get_book_by_id(book_id)
+            
+            if book_to_return == None:
+                print('\n\tBook not in catalog!')
+                continue
+
+            if book_to_return.get_id() not in borrower.get_borrowed_books():
+                print("\n\tThis book is not in the member's borrowed list!")
+                continue
+            break
+
+        self.display_book(book_to_return)
+
+        # Update book got borrowed
+        book_to_return.set_availability(True)
+        book_to_return.set_borrower(None)
+
+        # Update member borrowed books
+        borrower.return_borrowed_book(book_to_return.get_id())
+
+        self.save_books_to_json()
+        self.save_members_to_json()

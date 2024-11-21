@@ -3,8 +3,8 @@
         "id": 2,
         "title": "HP 2",
         "author": "JKR",
-        "available": true,
-        "borrower": null
+        "available": false,
+        "borrower": 4
     },
     {
         "id": 3,
@@ -12,5 +12,40 @@
         "author": "JKR",
         "available": true,
         "borrower": null
+    },
+    {
+        "id": 4,
+        "title": "HP 3",
+        "author": "JKR",
+        "available": false,
+        "borrower": 5
+    },
+    {
+        "id": 5,
+        "title": "HP 4",
+        "author": "JKR",
+        "available": false,
+        "borrower": 4
+    },
+    {
+        "id": 6,
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "available": false,
+        "borrower": 4
+    },
+    {
+        "id": 7,
+        "title": "1984",
+        "author": "George Orwell",
+        "available": false,
+        "borrower": 4
+    },
+    {
+        "id": 8,
+        "title": "To Kill a Mockingbird",
+        "author": "Harper Lee",
+        "available": false,
+        "borrower": 4
     }
 ]

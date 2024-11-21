@@ -3,9 +3,10 @@ import os, time
 def prompt_clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def wait():
-    input('\nPress a ENTER to continue...')
-    counter = 3
+def wait(sec=3, press_key=True):
+    if press_key:
+        input('\nPress a ENTER to continue...')
+    counter = sec
     print(f'Please wait...')
     while counter > 0:
         print(f'\t\t{counter}')

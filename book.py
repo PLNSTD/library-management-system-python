@@ -28,13 +28,16 @@ class Book():
         return self.author
     
     def is_available(self):
-        return self.status
+        return self.available
 
     def set_availability(self, status):
         self.available = status
     
     def get_borrower(self):
         return self.borrower
+
+    def set_borrower(self, member_id):
+        self.borrower = member_id
 
     def to_dict(self):
         return {

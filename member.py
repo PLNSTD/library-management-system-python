@@ -31,8 +31,8 @@ class Member():
     def get_borrowed_books(self):
         return self.borrowed_books
     
-    def add_borrowed_book(self, book):
-        self.borrowed_books.append(book)
+    def add_borrowed_book(self, book_id):
+        self.borrowed_books.append(book_id)
     
     def return_borrowed_book(self, book):
         self.borrowed_books.remove(book)
@@ -44,3 +44,4 @@ class Member():
             'last_name': self.last_name,
             'borrowed_books': self.borrowed_books
         }
+    

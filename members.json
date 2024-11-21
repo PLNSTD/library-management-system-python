@@ -1,8 +1,28 @@
 [
     {
         "id": 4,
-        "first_name": "Paulho Coelho",
-        "last_name": "lol",
+        "first_name": "Paulo",
+        "last_name": "Coelho",
+        "borrowed_books": [
+            2,
+            6,
+            8,
+            5,
+            7
+        ]
+    },
+    {
+        "id": 5,
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "borrowed_books": [
+            4
+        ]
+    },
+    {
+        "id": 6,
+        "first_name": "John",
+        "last_name": "Smith",
         "borrowed_books": []
     }
 ]
