@@ -4,10 +4,8 @@
         "first_name": "Paulo",
         "last_name": "Coelho",
         "borrowed_books": [
-            2,
             6,
             8,
-            5,
             7
         ]
     },
@@ -16,13 +14,20 @@
         "first_name": "Jane",
         "last_name": "Doe",
         "borrowed_books": [
-            4
+            4,
+            3
         ]
     },
     {
         "id": 6,
         "first_name": "John",
         "last_name": "Smith",
+        "borrowed_books": []
+    },
+    {
+        "id": 8,
+        "first_name": "Kentaro",
+        "last_name": "Miura",
         "borrowed_books": []
     }
 ]
